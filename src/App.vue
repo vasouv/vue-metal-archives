@@ -1,29 +1,63 @@
 <script setup>
-  import { ref } from "vue";
-  const selectedBand = ref('');
+import {ref} from "vue";
+import {BANDS} from "./bands.js";
 
-  const bands = [
-    {id: 184, name: 'Bathory'},
-    {id: 4, name: 'Iced Earth'},
-    {id: 150, name: 'Amon Amarth'}
-  ]
+const selectedBand = ref('');
+
+const bands = BANDS.toSorted((a, b) => a.name.localeCompare(b.name));
+
+const selectBand = (index) => {
+  selectedBand.value = bands[index].name;
+}
+
 </script>
 
 <template>
+
   <header class="container">
-    <h1>Vue Metal Archives API</h1>
+    <h1>Metal Vuer</h1>
   </header>
 
   <main class="container">
-    <label for="band-select">Select Band:</label>
-    <select id="band-select" v-model="selectedBand">
-      <option value="" disabled>- Select Band -</option>
-      <option value="184">Bathory</option>
-      <option value="4">Iced Earth</option>
-      <option value="150">Amon Amarth</option>
-    </select>
 
-    <span>Selected band ID is: {{ selectedBand }}</span>
+    <div id="metal-grid" class="grid">
+
+      <!-- bands list -->
+      <aside id="bands-list">
+        <ul>
+          <li v-for="(band, index) in bands" :key="band">
+            <span @click="selectBand(index)">{{ band.name }}</span>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- selected band -->
+      <section id="band-selection">
+        <h2>{{ selectedBand }}</h2>
+      </section>
+
+    </div>
 
   </main>
+
 </template>
+
+<style scoped>
+
+#metal-grid {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+#bands-list {
+  background-color: gainsboro;
+}
+
+#band-selection {
+  background-color: khaki;
+}
+
+</style>
