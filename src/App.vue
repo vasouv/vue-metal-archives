@@ -1,13 +1,18 @@
 <script setup>
 import {ref} from "vue";
 import {BANDS} from "./bands.js";
+import SelectedBand from "@/components/SelectedBand.vue";
 
-const selectedBand = ref('');
+const bandIndex = ref(0);
+const name = ref("");
+const metalArchivesId = ref(0);
 
 const bands = BANDS.toSorted((a, b) => a.name.localeCompare(b.name));
 
 const selectBand = (index) => {
-  selectedBand.value = bands[index].name;
+  bandIndex.value = index;
+  name.value = bands[index].name;
+  metalArchivesId.value = bands[index].metal_archives_id;
 }
 
 </script>
@@ -33,7 +38,7 @@ const selectBand = (index) => {
 
       <!-- selected band -->
       <section id="band-selection">
-        <h2>{{ selectedBand }}</h2>
+        <SelectedBand :bandIndex="bandIndex" :name="name" :metalArchivesId="metalArchivesId" />
       </section>
 
     </div>
