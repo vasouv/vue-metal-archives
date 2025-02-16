@@ -1,7 +1,7 @@
 <script setup>
-import {defineProps} from 'vue';
+import {defineProps, computed, ref} from 'vue';
 
-defineProps({
+const props = defineProps({
   bandIndex: {
     type: Number,
     default: 0
@@ -16,11 +16,27 @@ defineProps({
   }
 })
 
+let band = ref({});
+
+const metalArchivesLink = computed(() => {
+  if (props.metalArchivesId === 0) {
+    band = {};
+  } else {
+    band = {name: "Test band"};
+  }
+  // return 'https://metal-api.dev/bands/' + props.metalArchivesId;
+})
+
 </script>
 
 <template>
   <h2>{{ name }} Albums</h2>
   Metal Archives ID: {{ metalArchivesId }}
+  <br>
+  Metal Archives Band: {{ metalArchivesLink }}
+  <br>
+  {{ band }}
+
 </template>
 
 <style scoped>
