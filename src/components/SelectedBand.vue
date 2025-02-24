@@ -1,5 +1,5 @@
 <script setup>
-import {defineProps, computed, ref} from 'vue';
+import {defineProps, computed, ref, onUpdated, onMounted} from 'vue';
 
 const props = defineProps({
   bandIndex: {
@@ -12,19 +12,28 @@ const props = defineProps({
   },
   metalArchivesId: {
     type: Number,
-    default: 0
+    default: 89238
   }
 })
 
 let band = ref({});
+let albums = ref([]);
 
 const metalArchivesLink = computed(() => {
-  if (props.metalArchivesId === 0) {
-    band = {};
-  } else {
-    band = {name: "Test band"};
+  return `http://localhost:8080/metalapi/band/${props.metalArchivesId}/albums`;
+})
+
+onMounted(async () => {
+  const albumsLink = `http://localhost:8080/metalapi/band/${props.metalArchivesId}/albums`;
+  try {
+    const response = await fetch(albumsLink);
+    const data = await response.json();
+    console.log(data);
+    albums.value = data;
+    // albums.value = data.map(bandResponse => bandResponse.albums);
+  } catch (e) {
+    console.error('Error fetching albums', e);
   }
-  // return 'https://metal-api.dev/bands/' + props.metalArchivesId;
 })
 
 </script>
@@ -35,7 +44,7 @@ const metalArchivesLink = computed(() => {
   <br>
   Metal Archives Band: {{ metalArchivesLink }}
   <br>
-  {{ band }}
+  {{ albums }}
 
 </template>
 
