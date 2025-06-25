@@ -1,5 +1,5 @@
 <script setup>
-import {defineProps, computed, ref} from 'vue';
+import {defineProps, computed, ref, watch} from 'vue';
 
 const props = defineProps({
   bandIndex: {
@@ -10,32 +10,44 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  metalArchivesId: {
-    type: Number,
-    default: 0
+  spotifyId: {
+    type: String,
+    default: ''
   }
 })
 
 let band = ref({});
+let albums = ref([]);
+let singles = ref([]);
 
-const metalArchivesLink = computed(() => {
-  if (props.metalArchivesId === 0) {
-    band = {};
-  } else {
-    band = {name: "Test band"};
-  }
-  // return 'https://metal-api.dev/bands/' + props.metalArchivesId;
+const spotifyLink = computed(() => {
+  return `http://localhost:8080/spotify/band/${props.spotifyId}/albums`;
 })
+
+watch(() => [props.bandIndex, props.name, props.spotifyId], () => {
+  fetchAlbums()
+})
+
+async function fetchAlbums() {
+  try {
+    const response = await fetch(spotifyLink.value);
+    const data = await response.json();
+    singles.value = data.filter(a => a.type === 'SINGLE')
+    albums.value = data.filter(a => a.type === 'ALBUM')
+  } catch (e) {
+    console.error('Error fetching albums', e);
+  }
+}
 
 </script>
 
 <template>
   <h2>{{ name }} Albums</h2>
-  Metal Archives ID: {{ metalArchivesId }}
-  <br>
-  Metal Archives Band: {{ metalArchivesLink }}
-  <br>
-  {{ band }}
+  Spotify ID: {{ spotifyId }}
+  <h3>Albums</h3>
+  {{  albums }}
+  <h3>Singles</h3>
+  {{ singles }}
 
 </template>
 
