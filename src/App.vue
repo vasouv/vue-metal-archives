@@ -5,14 +5,14 @@ import SelectedBand from "@/components/SelectedBand.vue";
 
 const bandIndex = ref(0);
 const name = ref("");
-const metalArchivesId = ref(0);
+const spotifyId = ref(0);
 
 const bands = BANDS.toSorted((a, b) => a.name.localeCompare(b.name));
 
 const selectBand = (index) => {
   bandIndex.value = index;
   name.value = bands[index].name;
-  metalArchivesId.value = bands[index].metal_archives_id;
+  spotifyId.value = bands[index].spotify_link;
 }
 
 </script>
@@ -38,7 +38,7 @@ const selectBand = (index) => {
 
       <!-- selected band -->
       <section id="band-selection">
-        <SelectedBand :bandIndex="bandIndex" :name="name" :metalArchivesId="metalArchivesId" />
+        <SelectedBand :bandIndex="bandIndex" :name="name" :spotifyId="spotifyId" />
       </section>
 
     </div>
