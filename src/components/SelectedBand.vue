@@ -1,5 +1,6 @@
 <script setup>
-import {defineProps, computed, ref, watch} from 'vue';
+import {computed, ref, watch} from 'vue';
+import Album from "@/components/Album.vue";
 
 const props = defineProps({
   bandIndex: {
@@ -29,6 +30,10 @@ watch(() => [props.bandIndex, props.name, props.spotifyId], () => {
 })
 
 async function fetchAlbums() {
+  if (props.spotifyId === '') {
+    alert("Spotify link was not found.");
+    return;
+  }
   try {
     const response = await fetch(spotifyLink.value);
     const data = await response.json();
@@ -42,12 +47,12 @@ async function fetchAlbums() {
 </script>
 
 <template>
-  <h2>{{ name }} Albums</h2>
+  <h2>{{ name }}</h2>
   Spotify ID: {{ spotifyId }}
   <h3>Albums</h3>
-  {{  albums }}
+  <Album v-for="album in albums" :releaseDate="album.releaseDate" :title="album.title" :imgLink="album.imageUrl"/>
   <h3>Singles</h3>
-  {{ singles }}
+  <Album v-for="single in singles" :releaseDate="single.releaseDate" :title="single.title" :imgLink="single.imageUrl"/>
 
 </template>
 

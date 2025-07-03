@@ -19,11 +19,11 @@ const selectBand = (index) => {
 
 <template>
 
-  <header class="container">
+  <header class="container-fluid">
     <h1>Metal Vuer</h1>
   </header>
 
-  <main class="container">
+  <main class="container-fluid">
 
     <div id="metal-grid" class="grid">
 
