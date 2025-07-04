@@ -68,22 +68,24 @@ const selectBand = (index) => {
 }
 
 .band-sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* makes all children (li) the same width */
 }
 
 .band-sidebar li {
-  margin-bottom: 0.5rem;
+  width: 100%; /* ensure all buttons take the full width of the sidebar */
 }
 
 .band-sidebar a[role="button"] {
-  display: inline-block;
+  display: block;
+  width: 100%;
+  text-align: left;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  text-align: left;
+  box-sizing: border-box;
 }
 
 .band-sidebar a[role="button"]:hover {

@@ -31,8 +31,9 @@ const imageUrl = computed(() => {
 <template>
 
   <article class="album-card">
-    <header>{{ year }} - {{ title }}</header>
+    <header>{{ year }}</header>
     <img :src="imageUrl" height="160" width="160" />
+    <footer>{{ title }}</footer>
   </article>
 
 </template>
