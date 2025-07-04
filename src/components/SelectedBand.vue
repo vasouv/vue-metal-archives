@@ -48,7 +48,6 @@ async function fetchAlbums() {
 
 <template>
   <h2>{{ name }}</h2>
-  Spotify ID: {{ spotifyId }}
 
   <h3>Albums</h3>
   <section class="container-fluid">
@@ -67,6 +66,9 @@ async function fetchAlbums() {
 </template>
 
 <style scoped>
+h2 {
+  text-align: center;
+}
 .album-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

@@ -25,13 +25,13 @@ const selectBand = (index) => {
 
   <main class="container-fluid">
 
-    <div id="metal-grid" class="grid">
+    <div id="metal-grid" class="grid-layout">
 
       <!-- bands list -->
-      <aside id="bands-list">
+      <aside id="bands-list" class="band-sidebar">
         <ul>
-          <li v-for="(band, index) in bands" :key="band">
-            <span @click="selectBand(index)">{{ band.name }}</span>
+          <li v-for="(band, index) in bands" :key="band.name" @click="selectBand(index)">
+            <a role="button" :class="{ active: bandIndex === index }">{{ band.name }}</a>
           </li>
         </ul>
       </aside>
@@ -49,20 +49,58 @@ const selectBand = (index) => {
 
 <style scoped>
 
-#metal-grid {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+/* Main layout */
+.grid-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap; /* allows stacking on small screens */
 }
 
-#bands-list {
-  background-color: gainsboro;
+/* Sidebar */
+.band-sidebar {
+  display: inline-block;
+  padding: 1rem;
+  background-color: var(--pico-background);
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
+.band-sidebar ul {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* makes all children (li) the same width */
+}
+
+.band-sidebar li {
+  width: 100%; /* ensure all buttons take the full width of the sidebar */
+}
+
+.band-sidebar a[role="button"] {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.band-sidebar a[role="button"]:hover {
+  background-color: var(--pico-muted-color);
+}
+
+.band-sidebar a.active {
+  background-color: var(--pico-primary);
+  color: var(--pico-primary-inverse);
+}
+
+/* Selected band section takes the rest of the space */
 #band-selection {
-  background-color: khaki;
+  flex: 1;
+  min-width: 0; /* prevents overflow issues */
 }
 
 </style>
