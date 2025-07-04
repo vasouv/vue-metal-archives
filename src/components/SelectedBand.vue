@@ -49,13 +49,27 @@ async function fetchAlbums() {
 <template>
   <h2>{{ name }}</h2>
   Spotify ID: {{ spotifyId }}
+
   <h3>Albums</h3>
-  <Album v-for="album in albums" :releaseDate="album.releaseDate" :title="album.title" :imgLink="album.imageUrl"/>
+  <section class="container-fluid">
+    <div class="album-grid">
+      <Album v-for="(album, index) in albums" :key="index" :releaseDate="album.releaseDate" :title="album.title" :imgLink="album.imageUrl"/>
+    </div>
+  </section>
+
   <h3>Singles</h3>
-  <Album v-for="single in singles" :releaseDate="single.releaseDate" :title="single.title" :imgLink="single.imageUrl"/>
+  <section class="container-fluid">
+    <div class="album-grid">
+      <Album v-for="(single, index) in singles" :key="index" :releaseDate="single.releaseDate" :title="single.title" :imgLink="single.imageUrl"/>
+    </div>
+  </section>
 
 </template>
 
 <style scoped>
-
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
 </style>
